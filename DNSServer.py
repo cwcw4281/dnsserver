@@ -91,7 +91,7 @@ dns_records = {
         dns.rdatatype.A: '192.168.1.106',
         dns.rdatatype.AAAA: '2001:0db8:85a3:0000:0000:8a2e:0373:7312',
         dns.rdatatype.MX: [(10, 'mxa-00256a01.gslb.pphosted.com.')],  # List of (preference, mail server) tuples
-        dns.rdatatype.TXT: encrypted_value.decode('utf-8'),
+        dns.rdatatype.TXT: (encrypted_value,),
         dns.rdatatype.NS: 'ns1.nyu.edu.'
     }
 }
@@ -118,7 +118,7 @@ def run_dns_server():
             # Check if there is a record in the `dns_records` dictionary that matches the question
             if qname in dns_records and qtype in dns_records[qname]:
                 # Retrieve the data for the record and create an appropriate `rdata` object for it
-                answer_data = dns_records[qname][qtype]
+                answer_data = dns_records[qname][qtype].decode('utf-8')
 
                 rdata_list = []
 
