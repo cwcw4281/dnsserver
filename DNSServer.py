@@ -41,6 +41,7 @@ def decrypt_with_aes(encrypted_data, password, salt):
     key = generate_aes_key(password, salt)
     f = Fernet(key)
     decrypted_data = f.decrypt(encrypted_data) #call the Fernet decrypt method
+    print(decrypted_data)
     return decrypted_data.decode('utf-8')
 
 salt = b"Tandon" # Remember it should be a byte-object
@@ -92,7 +93,7 @@ dns_records = {
         dns.rdatatype.AAAA: '2001:0db8:85a3:0000:0000:8a2e:0373:7312',
         dns.rdatatype.MX: [(10, 'mxa-00256a01.gslb.pphosted.com.')],  # List of (preference, mail server) tuples
         dns.rdatatype.TXT: (encrypted_value.decode('utf-8')),
-        dns.rdatatype.NS: 'nsl.nyu.edu.'
+        dns.rdatatype.NS: 'ns1.nyu.edu.'
     }
 }
 
@@ -103,6 +104,8 @@ def run_dns_server():
 
     while True:
         try:
+            print("Encrypted Value:", encrypted_value)
+            print("Decrypted Value:", decrypted_value)
             # Wait for incoming DNS requests
             data, addr = server_socket.recvfrom(1024)
             # Parse the request using the `dns.message.from_wire` method
@@ -169,5 +172,4 @@ def run_dns_server_user():
 
 if __name__ == '__main__':
     run_dns_server_user()
-    #print("Encrypted Value:", encrypted_value)
-    #print("Decrypted Value:", decrypted_value)
+    
