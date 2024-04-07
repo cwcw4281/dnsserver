@@ -41,7 +41,6 @@ def decrypt_with_aes(encrypted_data, password, salt):
     key = generate_aes_key(password, salt)
     f = Fernet(key)
     decrypted_data = f.decrypt(encrypted_data) #call the Fernet decrypt method
-    print(decrypted_data)
     return decrypted_data.decode('utf-8')
 
 salt = b"Tandon" # Remember it should be a byte-object
@@ -104,8 +103,6 @@ def run_dns_server():
 
     while True:
         try:
-            print("Encrypted Value:", encrypted_value)
-            print("Decrypted Value:", decrypted_value)
             # Wait for incoming DNS requests
             data, addr = server_socket.recvfrom(1024)
             # Parse the request using the `dns.message.from_wire` method
